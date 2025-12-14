@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">WELCOME TO NHÀ CUA KHÁNH</div>
+
+    <div class="card">
+        <input id="phone" placeholder="Số điện thoại">
+        <input id="password" type="password" placeholder="Mật khẩu">
+        <button onclick="login()">Đăng nhập</button>
+    </div>
+</div>
+
+<script>
+function login() {
+    const phone = document.getElementById('phone').value;
+    const pass = document.getElementById('password').value;
+
+    // ADMIN ẨN
+    if (phone === "nhacuakhanh" && pass === "giakhanh0311") {
+        localStorage.setItem("role","admin");
+        location.href = "admin.html";
+        return;
+    }
+
+    // KHÁCH
+    if (phone === pass) {
+        localStorage.setItem("guestPhone", phone);
+        location.href = "guest.html";
+    } else {
+        alert("Sai thông tin đăng nhập");
+    }
+}
+</script>
+</body>
+</html>
