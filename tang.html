@@ -1,47 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Tầng</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-<button class="back" onclick="history.back()">Quay lại</button>
+
+<div class="nav">
+  <button onclick="back()">⬅</button>
+  <button onclick="logout()">Đăng xuất</button>
+</div>
 
 <div class="card">
-<input id="tang" placeholder="Tên tầng">
-<button onclick="addTang()">Thêm tầng</button>
+  <input id="floorName" placeholder="Tên tầng">
+  <button onclick="addFloor()">Thêm tầng</button>
 </div>
 
-<div id="list"></div>
+<div id="floorList"></div>
+
 </div>
 
+<script src="admin.js"></script>
 <script>
-let data = JSON.parse(localStorage.getItem("cosoList"));
-let ci = localStorage.getItem("cosoIndex");
+function back(){location.href="admin.html";}
+const baseIndex=localStorage.getItem("currentBase");
 
-function addTang(){
-    const t = document.getElementById("tang").value;
-    data[ci].tang.push({ name:t, phong:[] });
-    localStorage.setItem("cosoList",JSON.stringify(data));
-    render();
+function addFloor(){
+  const d=getData();
+  d[baseIndex].floors.push({name:floorName.value, rooms:[]});
+  saveData(d);
+  floorName.value="";
+  renderFloor();
 }
 
-function render(){
-    const div=document.getElementById("list");
-    div.innerHTML="";
-    data[ci].tang.forEach((t,i)=>{
-        div.innerHTML+=`
-        <div class="card">
-        ${t.name}
-        <button onclick="open(${i})">Mở</button>
-        </div>`;
-    });
+function openFloor(i){
+  localStorage.setItem("currentFloor",i);
+  location.href="phong.html";
 }
-function open(i){
-    localStorage.setItem("tangIndex",i);
-    location.href="phong.html";
+
+function removeFloor(i){
+  const d=getData();
+  d[baseIndex].floors.splice(i,1);
+  saveData(d);
+  renderFloor();
 }
-render();
+
+function renderFloor(){
+  const floors=getData()[baseIndex].floors;
+  floorList.innerHTML="";
+  floors.forEach((f,i)=>{
+    floorList.innerHTML+=`
+    <div class="card list-item">
+      ${f.name}
+      <div>
+        <button onclick="openFloor(${i})">Mở</button>
+        <button class="danger" onclick="removeFloor(${i})">Xóa</button>
+      </div>
+    </div>`;
+  });
+}
+renderFloor();
 </script>
 </body>
 </html>
