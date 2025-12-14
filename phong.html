@@ -1,46 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Phòng</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-<button class="back" onclick="history.back()">Quay lại</button>
+
+<div class="nav">
+  <button onclick="back()">⬅</button>
+</div>
 
 <div class="card">
-<input id="phong" placeholder="Số phòng">
-<button onclick="add()">Thêm phòng</button>
+  <input id="roomName" placeholder="Số phòng">
+  <button onclick="addRoom()">Thêm phòng</button>
 </div>
 
-<div id="list"></div>
+<div id="roomList"></div>
+
 </div>
 
+<script src="admin.js"></script>
 <script>
-let d=JSON.parse(localStorage.getItem("cosoList"));
-let ci=localStorage.getItem("cosoIndex");
-let ti=localStorage.getItem("tangIndex");
+const b=localStorage.getItem("currentBase");
+const f=localStorage.getItem("currentFloor");
 
-function add(){
-    d[ci].tang[ti].phong.push({ so:null, khach:null });
-    localStorage.setItem("cosoList",JSON.stringify(d));
-    render();
+function back(){location.href="tang.html";}
+
+function addRoom(){
+  const d=getData();
+  d[b].floors[f].rooms.push({name:roomName.value,guest:null});
+  saveData(d);
+  roomName.value="";
+  renderRoom();
 }
-function render(){
-    const div=document.getElementById("list");
-    div.innerHTML="";
-    d[ci].tang[ti].phong.forEach((p,i)=>{
-        div.innerHTML+=`
-        <div class="card">
-        Phòng ${i+1}
-        <button onclick="open(${i})">Mở</button>
-        </div>`;
-    });
+
+function openRoom(i){
+  localStorage.setItem("currentRoom",i);
+  location.href="khach.html";
 }
-function open(i){
-    localStorage.setItem("phongIndex",i);
-    location.href="khach.html";
+
+function removeRoom(i){
+  const d=getData();
+  d[b].floors[f].rooms.splice(i,1);
+  saveData(d);
+  renderRoom();
 }
-render();
+
+function renderRoom(){
+  const rooms=getData()[b].floors[f].rooms;
+  roomList.innerHTML="";
+  rooms.forEach((r,i)=>{
+    roomList.innerHTML+=`
+    <div class="card list-item">
+      Phòng ${r.name}
+      <div>
+        <button onclick="openRoom(${i})">Mở</button>
+        <button class="danger" onclick="removeRoom(${i})">Xóa</button>
+      </div>
+    </div>`;
+  });
+}
+renderRoom();
 </script>
 </body>
 </html>
