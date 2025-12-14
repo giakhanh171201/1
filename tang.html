@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+<button class="back" onclick="history.back()">Quay lại</button>
+
+<div class="card">
+<input id="tang" placeholder="Tên tầng">
+<button onclick="addTang()">Thêm tầng</button>
+</div>
+
+<div id="list"></div>
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("cosoList"));
+let ci = localStorage.getItem("cosoIndex");
+
+function addTang(){
+    const t = document.getElementById("tang").value;
+    data[ci].tang.push({ name:t, phong:[] });
+    localStorage.setItem("cosoList",JSON.stringify(data));
+    render();
+}
+
+function render(){
+    const div=document.getElementById("list");
+    div.innerHTML="";
+    data[ci].tang.forEach((t,i)=>{
+        div.innerHTML+=`
+        <div class="card">
+        ${t.name}
+        <button onclick="open(${i})">Mở</button>
+        </div>`;
+    });
+}
+function open(i){
+    localStorage.setItem("tangIndex",i);
+    location.href="phong.html";
+}
+render();
+</script>
+</body>
+</html>
