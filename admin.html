@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cơ sở</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>Cơ sở</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-    <button class="back" onclick="logout()">Đăng xuất</button>
 
-    <div class="card">
-        <input id="coso" placeholder="Tên cơ sở">
-        <button onclick="addCoSo()">Thêm cơ sở</button>
-    </div>
+<div class="nav">
+  <b>Quản lý cơ sở</b>
+  <button onclick="logout()">Đăng xuất</button>
+</div>
 
-    <div id="list"></div>
+<div class="card">
+  <input id="baseName" placeholder="Tên cơ sở">
+  <button onclick="addBase()">Thêm cơ sở</button>
+</div>
+
+<div id="baseList"></div>
+
 </div>
 
 <script src="admin.js"></script>
