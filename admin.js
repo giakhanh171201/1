@@ -1,43 +1,47 @@
-let cosoList = JSON.parse(localStorage.getItem("cosoList")) || [];
-
-function save() {
-    localStorage.setItem("cosoList", JSON.stringify(cosoList));
-}
-
-function addCoSo() {
-    const name = document.getElementById("coso").value;
-    if (!name) return;
-    cosoList.push({ name, tang: [] });
-    save();
-    render();
-}
-
-function render() {
-    const div = document.getElementById("list");
-    div.innerHTML = "";
-    cosoList.forEach((c, i) => {
-        div.innerHTML += `
-        <div class="card">
-            <b>${c.name}</b>
-            <button onclick="openCoSo(${i})">Mở</button>
-            <button class="danger" onclick="del(${i})">Xóa</button>
-        </div>`;
-    });
-}
-
-function openCoSo(i) {
-    localStorage.setItem("cosoIndex", i);
-    location.href = "tang.html";
-}
-
-function del(i) {
-    cosoList.splice(i,1);
-    save(); render();
-}
-
 function logout(){
-    localStorage.clear();
-    location.href="index.html";
+  location.href = "index.html";
 }
 
+function getData(){
+  return JSON.parse(localStorage.getItem("bases") || "[]");
+}
+
+function saveData(d){
+  localStorage.setItem("bases", JSON.stringify(d));
+}
+
+function addBase(){
+  const data = getData();
+  data.push({ name: baseName.value, floors: [] });
+  saveData(data);
+  baseName.value="";
+  render();
+}
+
+function removeBase(i){
+  const data = getData();
+  data.splice(i,1);
+  saveData(data);
+  render();
+}
+
+function openBase(i){
+  localStorage.setItem("currentBase", i);
+  location.href="tang.html";
+}
+
+function render(){
+  const data = getData();
+  baseList.innerHTML="";
+  data.forEach((b,i)=>{
+    baseList.innerHTML+=`
+    <div class="card list-item">
+      <div>${b.name}</div>
+      <div>
+        <button onclick="openBase(${i})">Mở</button>
+        <button class="danger" onclick="removeBase(${i})">Xóa</button>
+      </div>
+    </div>`;
+  });
+}
 render();
