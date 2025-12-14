@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Thông tin khách</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+<button class="back" onclick="history.back()">⬅ Quay lại</button>
+
+<div id="status" class="card"></div>
+
+<div class="card">
+<h4>Thông tin khách</h4>
+<input id="name" placeholder="Họ tên">
+<input id="phone" placeholder="Số điện thoại">
+<input id="people" type="number" placeholder="Số người">
+<input id="vehicle" type="number" placeholder="Số xe">
+<input id="months" type="number" placeholder="Thời hạn hợp đồng (tháng)">
+<input id="start" type="date">
+<input id="roomFee" type="number" placeholder="Tiền phòng">
+<input id="deposit" type="number" placeholder="Tiền cọc">
+<button onclick="saveGuest()">Lưu khách</button>
+</div>
+
+<div class="card">
+<h4>Điện phòng</h4>
+<input id="oldElectric" type="number" placeholder="Số điện cũ">
+<input id="newElectric" type="number" placeholder="Số điện mới">
+<input id="priceElectric" type="number" placeholder="Giá / số">
+</div>
+
+<div class="card">
+<h4>Dịch vụ</h4>
+<input id="water" type="number" placeholder="Nước / người">
+<input id="trash" type="number" placeholder="Rác / người">
+<input id="wash" type="number" placeholder="Giặt / người">
+<input id="dry" type="number" placeholder="Sấy / người">
+<input id="filter" type="number" placeholder="Lọc nước / người">
+<input id="clean" type="number" placeholder="Vệ sinh / người">
+</div>
+
+<div class="card">
+<button onclick="calculate()">TÍNH TIỀN</button>
+<h3 id="total"></h3>
+</div>
+</div>
+
+<script src="khach.js"></script>
+</body>
+</h
